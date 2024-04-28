@@ -13,6 +13,14 @@ const routes = [
     }
   },
   {
+    path: '/projectList',
+    name: 'ProjectList',
+    component: () => import('../views/ProjectListPage.vue'),
+    meta: {
+      title: 'ProjectList'
+    }
+  },
+  {
     path: '/project',
     name: 'Project',
     component: () => import('../views/ProjectPage.vue'),

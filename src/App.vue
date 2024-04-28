@@ -7,13 +7,13 @@
       <router-link to="/" class="toolbar-item">
         <v-img
           src="./assets/scrum.png"
-          max-width="50"
+          max-width="149"
           max-height="50"
         ></v-img>
       </router-link>
     </v-app-bar>
     <v-main>
-      <div style="margin-top: 8vh"></div>
+      <div style="margin-top: 8vh" />
       <router-view style="height: 80vh"/>
       <Footer style="height: 12vh"/>
     </v-main>
@@ -26,10 +26,6 @@
     name: "App",
     components: {
       Footer
-    },
-    mounted() {
-    },
-    methods: {
     },
   };
 </script>

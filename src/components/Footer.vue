@@ -3,8 +3,7 @@
     <v-card flat tile class="indigo lighten-1 white--text text-center">
 
       <v-card-text class="white--text pt-0">
-        This Scrum platform is designed and developed by NTUT,
-        which is a project for OOAD course in NTUT.
+        This Scrum platform is designed and developed for OOAD course in NTUT.
         All information and data from this platform are only for educational usages.
         If you are interested or this project provides you some support or inspiration,
         you can check out our source code.

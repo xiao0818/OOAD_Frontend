@@ -18,7 +18,7 @@
     },
     methods: {
       login() {
-        this.$router.push({ name: "Project", params: {} });
+        this.$router.push({ name: "ProjectList", params: {} });
       },
     },
   };
