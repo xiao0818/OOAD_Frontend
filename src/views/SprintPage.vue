@@ -1,6 +1,16 @@
 <template>
     <v-container>
-      <v-btn color="primary">Select Backlog Item</v-btn>
+      <v-row justify="space-around">
+        <v-col>
+          <h1>Sprint: {{ sprint.name }}</h1>
+        </v-col>
+        <v-col>
+          <h1>Sprint Goal: {{ sprint.goal }}</h1>
+        </v-col>
+        <v-col>
+          <v-btn color="primary">Select Backlog Item</v-btn>
+        </v-col>
+      </v-row>
       <v-data-table :headers="headers" :items="backlogItems" @click:row="openBacklogItem" />
     </v-container>
   </template>
@@ -13,6 +23,13 @@
       },
       data() {
         return {
+          sprint: {
+            name: 'Sprint 1',
+            id: 'd11afa70-1f57-498e-94ef-6eb36ce08722',
+            goal: 'Description 1',
+            startDate: '2024/04/15',
+            endDate: '2024/04/28'
+          },
           headers: [
             { text: "Backlog Item Name", value: "name" },
             { text: "Story Point", value: "storyPoint" },

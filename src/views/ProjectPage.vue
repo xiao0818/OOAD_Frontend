@@ -1,6 +1,16 @@
 <template>
   <v-container>
-    <v-btn color="primary">Create Sprint</v-btn>
+    <v-row justify="space-around">
+      <v-col>
+        <h1>Project: {{ project.name }}</h1>
+      </v-col>
+      <v-col>
+        <h1>Product Owner: {{ project.po }}</h1>
+      </v-col>
+      <v-col>
+        <v-btn color="primary">Create Sprint</v-btn>
+      </v-col>
+    </v-row>
     <v-data-table :headers="headers" :items="sprints" @click:row="openSprint" />
   </v-container>
 </template>
@@ -13,6 +23,11 @@
     },
     data() {
       return {
+        project: {
+          name: 'dcTrack',
+          id: '1300717a-e3b7-49b4-9258-b3ab6027006d',
+          po: 'Sunbird'
+        },
         headers: [
           { text: "Sprint Number", value: "name" },
           { text: "Sprint Goal", value: "goal" },

@@ -1,7 +1,7 @@
 <template>
-  <div id="home">
+  <div>
     <v-container>
-      <v-btn size="x-large" @click="login()">
+      <v-btn color="primary" style="margin-top: 40vh" @click="login()">
         Log In
       </v-btn>
     </v-container>
@@ -25,12 +25,5 @@
 </script>
   
 <style>
-  #home {
-    background-image: url(https://mdn.mozillademos.org/files/11307/bubbles.png),
-      linear-gradient(to bottom, rgba(34, 86, 155, 0.911), rgba(255, 255, 255, 0));
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    background-position: bottom right, left, right;
-    font-family: monospace;
-  }
 </style>
   

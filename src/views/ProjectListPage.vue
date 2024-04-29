@@ -1,6 +1,13 @@
 <template>
   <v-container>
-    <v-btn color="primary">Create Project</v-btn>
+    <v-row justify="space-around">
+      <v-col>
+        <h1>All Projects</h1>
+      </v-col>
+      <v-col>
+        <v-btn color="primary">Create Project</v-btn>
+      </v-col>
+    </v-row>
     <v-data-table :headers="headers" :items="projects" @click:row="openProject" />
   </v-container>
 </template>

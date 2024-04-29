@@ -1,6 +1,6 @@
 <template>
-  <v-footer dark padless>
-    <v-card flat tile class="indigo lighten-1 white--text text-center">
+  <v-footer height="100%" width="100%" padless>
+    <v-card height="100%" width="100%" flat tile class="indigo lighten-1 white--text text-center">
 
       <v-card-text class="white--text pt-0">
         This Scrum platform is designed and developed for OOAD course in NTUT.

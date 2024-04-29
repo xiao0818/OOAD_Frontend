@@ -14,7 +14,7 @@
     </v-app-bar>
     <v-main>
       <div style="margin-top: 8vh" />
-      <router-view style="height: 80vh"/>
+      <router-view jusity="center" align="center" style="height: 80vh"/>
       <Footer style="height: 12vh"/>
     </v-main>
   </v-app>
