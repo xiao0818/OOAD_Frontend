@@ -44,6 +44,14 @@ const routes = [
       title: 'BacklogItem'
     }
   },
+  {
+    path: '/task/:id',
+    name: 'Task',
+    component: () => import('../views/TaskPage.vue'),
+    meta: {
+      title: 'Task'
+    }
+  },
 ]
 
 const router = new VueRouter({
@@ -56,5 +64,10 @@ router.beforeEach((to, from, next) => {
   window.document.title = to.meta.title;
   next()
 })
+
+const VueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (to) {
+  return VueRouterPush.call(this, to).catch(err => err)
+}
 
 export default router
