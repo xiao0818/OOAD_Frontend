@@ -2,7 +2,7 @@
   <v-footer height="100%" width="100%" padless>
     <v-card height="100%" width="100%" flat tile class="indigo lighten-1 white--text text-center">
 
-      <v-card-text class="white--text pt-0">
+      <v-card-text class="white--text pt-3">
         This Scrum platform is designed and developed for OOAD course in NTUT.
         All information and data from this platform are only for educational usages.
         If you are interested or this project provides you some support or inspiration,

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="home">
     <v-container>
-      <v-btn color="primary" style="margin-top: 40vh" @click="login()">
+      <v-btn x-large color="primary" style="margin-top: 40vh" @click="login()">
         Log In
       </v-btn>
     </v-container>
@@ -25,5 +25,11 @@
 </script>
   
 <style>
+  #home {
+    background-image: linear-gradient(to bottom, rgba(34, 86, 155, 0.911), rgba(255, 255, 255, 0));
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom right, left, right;
+    font-family: monospace;
+  }
 </style>
   

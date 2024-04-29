@@ -31,7 +31,4 @@
 </script>
 
 <style>
-  .toolbar-item {
-    text-decoration: none;
-  }
 </style>

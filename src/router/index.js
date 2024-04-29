@@ -21,7 +21,7 @@ const routes = [
     }
   },
   {
-    path: '/project/:id',
+    path: '/projectList/project',
     name: 'Project',
     component: () => import('../views/ProjectPage.vue'),
     meta: {
@@ -29,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/sprint/:id',
+    path: '/projectList/project/sprint',
     name: 'Sprint',
     component: () => import('../views/SprintPage.vue'),
     meta: {
@@ -37,7 +37,7 @@ const routes = [
     }
   },
   {
-    path: '/backlogItem/:id',
+    path: '/projectList/project/sprint/backlogItem',
     name: 'BacklogItem',
     component: () => import('../views/BacklogItemPage.vue'),
     meta: {
@@ -45,7 +45,7 @@ const routes = [
     }
   },
   {
-    path: '/task/:id',
+    path: '/projectList/project/sprint/backlogItem/task',
     name: 'Task',
     component: () => import('../views/TaskPage.vue'),
     meta: {
