@@ -15,7 +15,7 @@
         <v-btn v-if="isProductBacklog" align-left color="primary" @click="OpenSprintList()">Sprint List</v-btn>
         <v-btn v-else align-left color="primary" @click="OpenProductBacklog()">Product Backlog</v-btn>
       </v-row>
-      <v-data-table v-if="isProductBacklog" :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5">
+      <v-data-table v-if="isProductBacklog" :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Product Backlog</v-toolbar-title>
@@ -122,6 +122,9 @@
       OpenSprintList() {
         this.isProductBacklog = false;
         
+      },
+      openBacklogItem(value) {
+        this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: '', backlogItemId: value.id} });
       },
       openSprint(value) {
         this.$router.push({ name: "Sprint", params: {projectId: this.$route.params.projectId, sprintId: value.id} });
