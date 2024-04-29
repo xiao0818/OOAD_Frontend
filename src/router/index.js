@@ -36,6 +36,14 @@ const routes = [
       title: 'Sprint'
     }
   },
+  {
+    path: '/backlogItem/:id',
+    name: 'BacklogItem',
+    component: () => import('../views/BacklogItemPage.vue'),
+    meta: {
+      title: 'BacklogItem'
+    }
+  },
 ]
 
 const router = new VueRouter({
