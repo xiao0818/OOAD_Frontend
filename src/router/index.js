@@ -28,6 +28,14 @@ const routes = [
       title: 'Project'
     }
   },
+  {
+    path: '/sprint/:id',
+    name: 'Sprint',
+    component: () => import('../views/SprintPage.vue'),
+    meta: {
+      title: 'Sprint'
+    }
+  },
 ]
 
 const router = new VueRouter({

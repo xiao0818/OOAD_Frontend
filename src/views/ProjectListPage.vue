@@ -1,5 +1,8 @@
 <template>
-  <v-data-table :headers="headers" :items="projects" @click:row="openProject" />
+  <v-container>
+    <v-btn color="primary">Create Project</v-btn>
+    <v-data-table :headers="headers" :items="projects" @click:row="openProject" />
+  </v-container>
 </template>
 
 <script>
