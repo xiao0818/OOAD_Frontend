@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <ProjectRow v-for="item in projects" :key="item.id" :item="item" />
-  </div>
+  <v-data-table :headers="headers" :items="projects" @click:row="openProject" />
 </template>
 
 <script>
-import ProjectRow from "../components/ProjectRow";
 
   export default {
     name: "ProjectPage",
     components: {
-      ProjectRow
     },
     data() {
       return {
+        headers: [
+          { text: "Project Name", value: "name" },
+          { text: "Product Owner", value: "po" },
+        ],
         projects: [
           {
             name: 'dcTrack',
@@ -33,6 +33,12 @@ import ProjectRow from "../components/ProjectRow";
         ],
       }
     },
+    methods: {
+      openProject(value) {
+        console.log(value.id)
+        this.$router.push({ name: "Project", params: {id: value.id} });
+      }
+    }
   }
 </script>
 
