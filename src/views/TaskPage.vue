@@ -1,32 +1,32 @@
 <template>
   <div class="theme">
     <v-container style="width: 80%">
-      <v-col>
+      <v-row align="center">
         <v-card class="elevation-5 my-5">
           <v-card-title>Task Title</v-card-title>
           <v-card-text class="text">{{ task.title }}</v-card-text>
         </v-card>
-        <v-divider></v-divider>
-        <v-card class="elevation-5 my-5">
-          <v-card-title>State</v-card-title>
-          <v-card-text class="text">{{ task.state }}</v-card-text>
-        </v-card>
-        <v-divider></v-divider>
+        <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Priority</v-card-title>
           <v-card-text class="text">{{ task.priority }}</v-card-text>
         </v-card>
-        <v-divider></v-divider>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-card class="elevation-5 my-5">
+          <v-card-title>State</v-card-title>
+          <v-card-text class="text">{{ task.state }}</v-card-text>
+        </v-card>
+        <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Estimate Hours</v-card-title>
-          <v-card-text class="text">{{ task.estimateHours }}</v-card-text>
+          <v-card-text class="text">{{ task.hours }}</v-card-text>
         </v-card>
-        <v-divider></v-divider>
+        <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Description</v-card-title>
           <v-card-text class="text">{{ task.description }}</v-card-text>
         </v-card>
-      </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -39,20 +39,13 @@
     },
     data() {
       return {
-        headers: [
-          { text: "Task Title", value: "title" },
-          { text: "State", value: "state" },
-          { text: "Priority", value: "priority" },
-          { text: "Estimate Hours", value: "estimateHours" },
-          { text: "Description", value: "description" },
-        ],
         task: {
           title: 'Task 1',
           id: '32317bad-1a12-4acb-aef7-86c5cc99b610',
-          state: 'Done',
           priority: '99',
-          estimateHours: '3',
-          description: 'Description 1'
+          state: 'Done',
+          hours: '3',
+          description: 'Description 001'
         },
       }
     },

@@ -61,23 +61,26 @@
           {
             title: 'Task 1',
             id: '32317bad-1a12-4acb-aef7-86c5cc99b610',
-            state: 'Done',
             priority: '99',
-            estimateHours: '3'
+            state: 'Done',
+            hours: '3',
+            description: 'Description 001'
           },
           {
             title: 'Task 2',
             id: '3cb76c7f-b447-4005-a541-af493fec8c60',
-            state: 'Doing',
             priority: '99',
-            estimateHours: '1'
+            state: 'Doing',
+            hours: '1',
+            description: 'Description 002'
           },
           {
             title: 'Task 3',
             id: '961cb3e2-cbe3-4a4e-8760-16b00af30a25',
-            state: 'Todo',
             priority: '99',
-            estimateHours: '2'
+            state: 'Todo',
+            hours: '2',
+            description: 'Description 003'
           },
         ],
       }
