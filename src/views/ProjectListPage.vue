@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { getAllProjects } from '../api/projectApi';
 
   export default {
     name: "ProjectPage",
@@ -83,23 +84,7 @@
           name: null,
           productOwner: null
         },
-        projects: [
-          {
-            name: 'dcTrack',
-            id: '1300717a-e3b7-49b4-9258-b3ab6027006d',
-            productOwner: 'Sunbird'
-          },
-          {
-            name: 'ezKanban',
-            id: '356bfc8f-4840-4484-a613-8151023b3641',
-            productOwner: 'Teddy'
-          },
-          {
-            name: 'IoT',
-            id: '00a27b11-3fe3-4f92-9d21-c5e733d20412',
-            productOwner: 'YC'
-          },
-        ],
+        projects: [],
       }
     },
     watch: {
@@ -108,17 +93,17 @@
       },
     },
     async mounted() {
-      // this.products = await getAllProjects();
+      this.projects = await getAllProjects();
     },
     methods: {
       openProject(value) {
-        this.$router.push({ name: "Project", params: {projectId: value.id} });
+        this.$router.push({ name: "Project", params: {projectId: value.id, project: value} });
       },
       reset() {
         this.$refs.form.reset();
       },
       async refresh() {
-        // this.projects = await getAllProjects();
+        this.projects = await getAllProjects();
       },
       close() {
         this.dialog = false;

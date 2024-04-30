@@ -4,19 +4,19 @@
       <v-row align="center">
         <v-card class="elevation-5 my-5">
           <v-card-title>Project Name</v-card-title>
-          <v-card-text class="text">{{ project.name }}</v-card-text>
+          <v-card-text class="text">{{ this.project.name }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Product Owner</v-card-title>
-          <v-card-text class="text">{{ project.productOwner }}</v-card-text>
+          <v-card-text class="text">{{ this.project.productOwner }}</v-card-text>
         </v-card>
       </v-row>
-      <v-tabs right class="elevation-5 my-5" >
+      <v-tabs class="elevation-5 my-5" >
         <v-tab>Product Backlog</v-tab>
         <v-tab>Sprint List</v-tab>
         <v-tab-item>
-          <v-data-table :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
+          <v-data-table :headers="backlogItems_headers" :items="project.productBacklog" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Product Backlog</v-toolbar-title>
@@ -88,7 +88,7 @@
           </v-data-table>
         </v-tab-item>
         <v-tab-item>
-          <v-data-table :headers="sprints_headers" :items="sprints" sort-by="number" class="elevation-5 my-5" @click:row="openSprint">
+          <v-data-table :headers="sprints_headers" :items="project.sprintList" sort-by="number" class="elevation-5 my-5" @click:row="openSprint">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Sprint List</v-toolbar-title>
@@ -209,37 +209,9 @@
           startDate: null,
           goal: null
         },
-        project: {
-          name: 'dcTrack',
-          id: '1300717a-e3b7-49b4-9258-b3ab6027006d',
-          productOwner: 'Sunbird'
-        },
         backlogItems_headers: [
           { text: "Backlog Item Name", value: "name" },
           { text: "Acceptance Criteria", value: "acceptanceCriteria" },
-        ],
-        backlogItems: [
-          {
-            name: 'Product Backlog Item 1',
-            id: '19d6c427-7d56-47e4-a5eb-37154f235d55',
-            storyPoint: '',
-            importance: '',
-            acceptanceCriteria: 'Criteria 01'
-          },
-          {
-            name: 'Product Backlog Item 2',
-            id: '70ef56e4-09d8-4e6f-96ee-073414a3d61a',
-            storyPoint: '',
-            importance: '',
-            acceptanceCriteria: 'Criteria 02'
-          },
-          {
-            name: 'Product Backlog Item 3',
-            id: 'bb2a0a5d-15af-41f3-ad02-b103e15845af',
-            storyPoint: '',
-            importance: '',
-            acceptanceCriteria: 'Criteria 03'
-          },
         ],
         sprints_headers: [
           { text: "Sprint Number", value: "number" },
@@ -248,32 +220,7 @@
           { text: "End Date", value: "endDate" },
           { text: "Sprint Goal", value: "goal" },
         ],
-        sprints: [
-          {
-            number: '1',
-            id: 'd11afa70-1f57-498e-94ef-6eb36ce08722',
-            timeInterval: '14',
-            startDate: '2024/04/15',
-            endDate: '2024/04/28',
-            goal: 'Description 1'
-          },
-          {
-            number: '2',
-            id: 'c034ab9d-9f17-4046-9ae3-8eb0d153910f',
-            timeInterval: '14',
-            startDate: '2024/04/29',
-            endDate: '2024/05/12',
-            goal: 'Description 2'
-          },
-          {
-            number: '3',
-            id: '47b8ec71-3f56-4d5c-9419-84b8f9311bc3',
-            timeInterval: '14',
-            startDate: '2024/05/13',
-            endDate: '2024/05/26',
-            goal: 'Description 3'
-          },
-        ],
+        project: this.$route.params.project,
       }
     },
     watch: {
@@ -284,10 +231,6 @@
         val || this.close();
       },
     },
-    mounted() {
-      // this.backlogItems = $store;
-      // this.sprints = $store;
-    },
     methods: {
       OpenProductBacklog() {
         this.isProductBacklog = true;
@@ -296,10 +239,10 @@
         this.isProductBacklog = false;
       },
       openBacklogItem(value) {
-        this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: '', backlogItemId: value.id} });
+        this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: '', backlogItemId: value.id, backlogItem: value} });
       },
       openSprint(value) {
-        this.$router.push({ name: "Sprint", params: {projectId: this.$route.params.projectId, sprintId: value.id} });
+        this.$router.push({ name: "Sprint", params: {projectId: this.$route.params.projectId, sprintId: value.id, sprint: value, productBacklog: this.project.productBacklog} });
       },
       reset() {
         this.$refs.form.reset();

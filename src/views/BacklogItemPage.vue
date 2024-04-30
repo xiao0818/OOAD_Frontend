@@ -4,25 +4,25 @@
       <v-row align="center">
         <v-card class="elevation-5 my-5">
           <v-card-title>Backlog Item</v-card-title>
-          <v-card-text class="text">{{ backlogItem.name }}</v-card-text>
+          <v-card-text class="text">{{ this.backlogItem.name }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Story Point</v-card-title>
-          <v-card-text class="text">{{ backlogItem.storyPoint }}</v-card-text>
+          <v-card-text class="text">{{ this.backlogItem.storyPoint }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Importance</v-card-title>
-          <v-card-text class="text">{{ backlogItem.importance }}</v-card-text>
+          <v-card-text class="text">{{ this.backlogItem.importance }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Acceptance Criteria</v-card-title>
-          <v-card-text class="text">{{ backlogItem.acceptanceCriteria }}</v-card-text>
+          <v-card-text class="text">{{ this.backlogItem.acceptanceCriteria }}</v-card-text>
         </v-card>
       </v-row>
-      <v-data-table :headers="headers" :items="tasks" sort-by="title" class="elevation-5 my-5" @click:row="openTask">
+      <v-data-table :headers="headers" :items="this.backlogItem.taskList" sort-by="title" class="elevation-5 my-5" @click:row="openTask">
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Task List</v-toolbar-title>
@@ -129,45 +129,13 @@
           hours: null,
           description: null
         },
-        backlogItem: {
-          name: 'Sprint Backlog Item 1',
-          id: '6d039242-c8cb-4fc7-87e1-5732aa8df6ab',
-          storyPoint: '3',
-          importance: '99',
-          acceptanceCriteria: 'Criteria 1'
-        },
         headers: [
           { text: "Task Title", value: "title" },
           { text: "Priority", value: "priority" },
           { text: "State", value: "state" },
           { text: "Estimate Hours", value: "hours" },
         ],
-        tasks: [
-          {
-            title: 'Task 1',
-            id: '32317bad-1a12-4acb-aef7-86c5cc99b610',
-            priority: 'CRITICAL',
-            state: 'Done',
-            hours: '3',
-            description: 'Description 001'
-          },
-          {
-            title: 'Task 2',
-            id: '3cb76c7f-b447-4005-a541-af493fec8c60',
-            priority: 'HIGH',
-            state: 'Doing',
-            hours: '1',
-            description: 'Description 002'
-          },
-          {
-            title: 'Task 3',
-            id: '961cb3e2-cbe3-4a4e-8760-16b00af30a25',
-            priority: 'MEDIUM',
-            state: 'Todo',
-            hours: '2',
-            description: 'Description 003'
-          },
-        ],
+        backlogItem: this.$route.params.backlogItem,
       }
     },
     watch: {
@@ -180,7 +148,7 @@
     },
     methods: {
       openTask(value) {
-        this.$router.push({ name: "Task", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: this.$route.params.backlogItemId, taskId: value.id} });
+        this.$router.push({ name: "Task", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: this.$route.params.backlogItemId, taskId: value.id, task: value} });
       },
       reset() {
         this.$refs.form.reset();
