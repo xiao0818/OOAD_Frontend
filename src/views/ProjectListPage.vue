@@ -65,14 +65,6 @@
     data() {
       return {
         dialog: false,
-        newProject: {
-          name: null,
-          productOwner: null
-        },
-        defaultProject: {
-          name: null,
-          productOwner: null
-        },
         nameRule: [
           (v) => !!v || "Field cannot be empty.",
         ],
@@ -83,6 +75,14 @@
           { text: "Project Name", value: "name" },
           { text: "Product Owner", value: "productOwner" },
         ],
+        newProject: {
+          name: null,
+          productOwner: null
+        },
+        defaultProject: {
+          name: null,
+          productOwner: null
+        },
         projects: [
           {
             name: 'dcTrack',

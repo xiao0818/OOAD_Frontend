@@ -63,10 +63,9 @@
                         <v-col cols="12" md="6">
                           <v-text-field
                             v-model="newTask.hours"
-                            label="Estimate Hours*"
+                            label="Estimate Hours"
                             type="number"
                             :rules="hoursRule"
-                            required
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" md="12">
@@ -106,6 +105,18 @@
     data() {
       return {
         dialog: false,
+        titleRule: [
+          (v) => !!v || "Field cannot be empty.",
+        ],
+        priorityRule: [
+          (v) => !!v || "Field cannot be empty.",
+        ],
+        hoursRule: [
+          // (v) => /^\d+$/.test(v) || "Field can only contain numbers.",
+        ],
+        descriptionRule: [
+          (v) => !!v || "Field cannot be empty.",
+        ],
         newTask: {
           title: null,
           priority: null,
@@ -118,19 +129,6 @@
           hours: null,
           description: null
         },
-        titleRule: [
-          (v) => !!v || "Field cannot be empty.",
-        ],
-        priorityRule: [
-          (v) => !!v || "Field cannot be empty.",
-        ],
-        hoursRule: [
-          (v) => !!v || "Field cannot be empty.",
-          (v) => /^\d+$/.test(v) || "Field can only contain numbers.",
-        ],
-        descriptionRule: [
-          (v) => !!v || "Field cannot be empty.",
-        ],
         backlogItem: {
           name: 'Sprint Backlog Item 1',
           id: '6d039242-c8cb-4fc7-87e1-5732aa8df6ab',
