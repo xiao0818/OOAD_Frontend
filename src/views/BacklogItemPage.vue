@@ -55,7 +55,7 @@
           { text: "Task Title", value: "title" },
           { text: "State", value: "state" },
           { text: "Priority", value: "priority" },
-          { text: "Estimate Hours", value: "estimateHours" },
+          { text: "Estimate Hours", value: "hours" },
         ],
         tasks: [
           {
