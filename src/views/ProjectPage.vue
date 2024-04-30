@@ -11,142 +11,147 @@
           <v-card-title>Product Owner</v-card-title>
           <v-card-text class="text">{{ project.productOwner }}</v-card-text>
         </v-card>
-        <v-spacer></v-spacer>
-        <v-btn v-if="isProductBacklog" color="primary" @click="OpenSprintList()">Sprint List</v-btn>
-        <v-btn v-else color="primary" @click="OpenProductBacklog()">Product Backlog</v-btn>
       </v-row>
-      <v-data-table v-if="isProductBacklog" :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>Product Backlog</v-toolbar-title>
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-spacer></v-spacer>
-            <!-- create backlog item dialog -->
-            <v-dialog v-if="isProductBacklog" v-model="dialog" max-width="500px" persistent>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Backlog Item</v-btn>
-              </template>
-              <!-- create backlog item -->
-              <v-form ref="form">
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">Create Backlog Item</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="newBacklogItem.name"
-                            label="Backlog Item Name*"
-                            type="text"
-                            :rules="nameRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="newBacklogItem.storyPoint"
-                            label="Story Point"
-                            type="number"
-                            :rules="storyPointRule"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="newBacklogItem.importance"
-                            label="Importance*"
-                            type="number"
-                            :rules="importanceRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="12">
-                          <v-text-field
-                            v-model="newBacklogItem.acceptanceCriteria"
-                            label="Acceptance Criteria*"
-                            type="text"
-                            :rules="acceptanceCriteriaRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
-                    <v-btn color="primary" text @click="save(); reset();">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-form>
-            </v-dialog>
-            <!-- end of backlog item dialog -->
-          </v-toolbar>
-        </template>
-      </v-data-table>
-      <v-data-table v-if="!isProductBacklog" :headers="sprints_headers" :items="sprints" sort-by="number" class="elevation-5 my-5" @click:row="openSprint">
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>Sprint List</v-toolbar-title>
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-spacer></v-spacer>
-            <!-- create sprint dialog -->
-            <v-dialog v-if="!isProductBacklog" v-model="dialog" max-width="500px" persistent>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Sprint</v-btn>
-              </template>
-              <!-- create sprint -->
-              <v-form ref="form">
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">Create Sprint</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="newSprint.timeInterval"
-                            label="Time Interval*"
-                            type="number"
-                            :rules="acceptanceCriteriaRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                          <v-text-field
-                            v-model="newSprint.startDate"
-                            label="StartDate*"
-                            type="date"
-                            :rules="acceptanceCriteriaRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="12">
-                          <v-text-field
-                            v-model="newSprint.goal"
-                            label="Sprint Goal*"
-                            type="text"
-                            :rules="acceptanceCriteriaRule"
-                            required
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
-                    <v-btn color="primary" text @click="save(); reset();">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-form>
-            </v-dialog>
-            <!-- end of sprint dialog -->
-          </v-toolbar>
-        </template>
-      </v-data-table>
+      <v-tabs right class="elevation-5 my-5" >
+        <v-tab>Product Backlog</v-tab>
+        <v-tab>Sprint List</v-tab>
+        <v-tab-item>
+          <v-data-table :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
+            <template v-slot:top>
+              <v-toolbar flat>
+                <v-toolbar-title>Product Backlog</v-toolbar-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
+                <!-- create backlog item dialog -->
+                <v-dialog v-model="dialogBacklogItem" max-width="500px" persistent>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Backlog Item</v-btn>
+                  </template>
+                  <!-- create backlog item -->
+                  <v-form ref="form">
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">Create Backlog Item</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" md="6">
+                              <v-text-field
+                                v-model="newBacklogItem.name"
+                                label="Backlog Item Name*"
+                                type="text"
+                                :rules="nameRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                              <v-text-field
+                                v-model="newBacklogItem.storyPoint"
+                                label="Story Point"
+                                type="number"
+                                :rules="storyPointRule"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                              <v-text-field
+                                v-model="newBacklogItem.importance"
+                                label="Importance*"
+                                type="number"
+                                :rules="importanceRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="12">
+                              <v-text-field
+                                v-model="newBacklogItem.acceptanceCriteria"
+                                label="Acceptance Criteria*"
+                                type="text"
+                                :rules="acceptanceCriteriaRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
+                        <v-btn color="primary" text @click="saveBacklogItem(); reset();">Save</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-form>
+                </v-dialog>
+                <!-- end of backlog item dialog -->
+              </v-toolbar>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+        <v-tab-item>
+          <v-data-table :headers="sprints_headers" :items="sprints" sort-by="number" class="elevation-5 my-5" @click:row="openSprint">
+            <template v-slot:top>
+              <v-toolbar flat>
+                <v-toolbar-title>Sprint List</v-toolbar-title>
+                <v-divider class="mx-4" inset vertical></v-divider>
+                <v-spacer></v-spacer>
+                <!-- create sprint dialog -->
+                <v-dialog v-model="dialogSprint" max-width="500px" persistent>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Sprint</v-btn>
+                  </template>
+                  <!-- create sprint -->
+                  <v-form ref="form">
+                    <v-card>
+                      <v-card-title>
+                        <span class="text-h5">Create Sprint</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" md="6">
+                              <v-text-field
+                                v-model="newSprint.timeInterval"
+                                label="Time Interval*"
+                                type="number"
+                                :rules="acceptanceCriteriaRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                              <v-text-field
+                                v-model="newSprint.startDate"
+                                label="StartDate*"
+                                type="date"
+                                :rules="acceptanceCriteriaRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="12">
+                              <v-text-field
+                                v-model="newSprint.goal"
+                                label="Sprint Goal*"
+                                type="text"
+                                :rules="acceptanceCriteriaRule"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
+                        <v-btn color="primary" text @click="saveSprint(); reset();">Save</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-form>
+                </v-dialog>
+                <!-- end of sprint dialog -->
+              </v-toolbar>
+            </template>
+          </v-data-table>
+        </v-tab-item>
+      </v-tabs>
     </v-container>
   </div>
 </template>
@@ -159,7 +164,8 @@
     },
     data() {
       return {
-        dialog: false,
+        dialogBacklogItem: false,
+        dialogSprint: false,
         nameRule: [
           (v) => !!v || "Field cannot be empty.",
         ],
@@ -203,7 +209,6 @@
           startDate: null,
           goal: null
         },
-        isProductBacklog: true,
         project: {
           name: 'dcTrack',
           id: '1300717a-e3b7-49b4-9258-b3ab6027006d',
@@ -272,7 +277,10 @@
       }
     },
     watch: {
-      dialog(val) {
+      dialogBacklogItem(val) {
+        val || this.close();
+      },
+      dialogSprint(val) {
         val || this.close();
       },
     },
@@ -300,24 +308,26 @@
         // this.projects = await getAllProjects();
       },
       close() {
-        this.dialog = false;
+        this.dialogBacklogItem = false;
+        this.dialogSprint = false;
         this.$nextTick(() => {
           this.newBacklogItem = Object.assign({}, this.defaultBacklogItem);
           this.newSprint = Object.assign({}, this.defaultSprint);
         });
       },
-      async save() {
-        // if (this.isProductBacklog){
-        //   await createBacklogItem(
+      async saveBacklogItem() {
+        // await createBacklogItem(
+        // this.newProject.projectName,
+        // this.newProject.productOwner
+        // );
+        await this.refresh();
+        this.close();
+      },
+      async saveSprint() {
+        // await createSprint(
         //   this.newProject.projectName,
         //   this.newProject.productOwner
-        //   );
-        // } else {
-        //   await createSprint(
-        //     this.newProject.projectName,
-        //     this.newProject.productOwner
-        //   );
-        // }
+        // );
         await this.refresh();
         this.close();
       },
