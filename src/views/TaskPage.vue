@@ -42,7 +42,7 @@
         task: {
           title: 'Task 1',
           id: '32317bad-1a12-4acb-aef7-86c5cc99b610',
-          priority: '99',
+          priority: 'CRITICAL',
           state: 'Done',
           hours: '3',
           description: 'Description 001'

@@ -18,15 +18,14 @@
                   <v-card-title>
                     <span class="text-h5">Create Project</span>
                   </v-card-title>
-
                   <v-card-text>
                     <v-container>
                       <v-row>
                         <v-text-field
-                          v-model="newProject.projectName"
+                          v-model="newProject.name"
                           label="Project Name*"
                           type="text"
-                          :rules="projectNameRule"
+                          :rules="nameRule"
                           required
                         ></v-text-field>
                       </v-row>
@@ -34,6 +33,7 @@
                         <v-text-field
                           v-model="newProject.productOwner"
                           label="Product Owner*"
+                          type="text"
                           :rules="productOwnerRule"
                           required
                         ></v-text-field>
@@ -42,8 +42,8 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close(); reset();">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="save(); reset();">Save</v-btn>
+                    <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
+                    <v-btn color="primary" text @click="save(); reset();">Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-form>
@@ -66,14 +66,14 @@
       return {
         dialog: false,
         newProject: {
-          projectName: null,
+          name: null,
           productOwner: null
         },
         defaultProject: {
-          projectName: null,
+          name: null,
           productOwner: null
         },
-        projectNameRule: [
+        nameRule: [
           (v) => !!v || "Field cannot be empty.",
         ],
         productOwnerRule: [
@@ -128,7 +128,7 @@
       },
       async save() {
         // await createProject(
-        //   this.newProject.projectName,
+        //   this.newProject.name,
         //   this.newProject.productOwner
         // );
         await this.refresh();
