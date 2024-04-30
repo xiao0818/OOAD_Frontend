@@ -27,13 +27,42 @@
           <v-card-text class="text">{{ sprint.goal }}</v-card-text>
         </v-card>
       </v-row>
-      <v-data-table :headers="headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
+      <v-data-table :headers="sprintBacklog_headers" :items="sprintBacklogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Sprint Backlog</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn color="primary">Select Backlog Item</v-btn>
+            <!-- select backlog item dialog -->
+            <v-dialog v-model="dialog" max-width="500px" persistent>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on">Select Backlog Item</v-btn>
+              </template>
+              <!-- select backlog item card -->
+              <v-form ref="form">
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">Select Backlog Item</span>
+                  </v-card-title>
+                  <v-data-table :headers="productBacklog_headers" :items="productBacklogItems" sort-by="name" class="elevation-5 my-5">
+                    <template v-slot:top>
+                      <v-toolbar flat>
+                        <v-toolbar-title>Product Backlog</v-toolbar-title>
+                        <v-divider class="mx-4" inset vertical></v-divider>
+                      </v-toolbar>
+                    </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+                      <v-btn color="primary" @click="moveBacklogItemIntoSprintBacklog(item)"> Move Into Sprint Backlog </v-btn>
+                    </template>
+                  </v-data-table>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="close(); resetDataTableInDialog()">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-form>
+            </v-dialog>
+            <!-- end of select backlog item dialog -->
           </v-toolbar>
         </template>
       </v-data-table>
@@ -49,6 +78,7 @@
     },
     data() {
       return {
+        dialog: false,
         sprint: {
           id: 'd11afa70-1f57-498e-94ef-6eb36ce08722',
           number: '1',
@@ -57,13 +87,40 @@
           endDate: '2024/04/28',
           goal: 'Description 1'
         },
-        headers: [
+        productBacklog_headers: [
+          { text: "Backlog Item Name", value: "name" },
+          { text: "Actions", value: "actions", sortable: false },
+        ],
+        productBacklogItems: [
+          {
+            name: 'Product Backlog Item 1',
+            id: '19d6c427-7d56-47e4-a5eb-37154f235d55',
+            storyPoint: '',
+            importance: '',
+            acceptanceCriteria: 'Criteria 01'
+          },
+          {
+            name: 'Product Backlog Item 2',
+            id: '70ef56e4-09d8-4e6f-96ee-073414a3d61a',
+            storyPoint: '',
+            importance: '',
+            acceptanceCriteria: 'Criteria 02'
+          },
+          {
+            name: 'Product Backlog Item 3',
+            id: 'bb2a0a5d-15af-41f3-ad02-b103e15845af',
+            storyPoint: '',
+            importance: '',
+            acceptanceCriteria: 'Criteria 03'
+          },
+        ],
+        sprintBacklog_headers: [
           { text: "Backlog Item Name", value: "name" },
           { text: "Story Point", value: "storyPoint" },
           { text: "Importance", value: "importance" },
           { text: "Acceptance Criteria", value: "acceptanceCriteria" },
         ],
-        backlogItems: [
+        sprintBacklogItems: [
           {
             name: 'Sprint Backlog Item 1',
             id: '6d039242-c8cb-4fc7-87e1-5732aa8df6ab',
@@ -88,10 +145,35 @@
         ],
       }
     },
+    watch: {
+      dialog(val) {
+        val || this.close();
+      },
+    },
     methods: {
       openBacklogItem(value) {
+        console.log(value)
         this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: value.id} });
-      }
+      },
+      async moveBacklogItemIntoSprintBacklog(item) {
+        // await moveBacklogItem(
+        //   this.newProject.projectName,
+        //   this.newProject.productOwner
+        // );
+        console.log(item);
+        await this.refresh();
+      },
+      resetDataTableInDialog() {
+        // todo
+        this.$refs.form.reset();
+      },
+      async refresh() {
+        // this.projects = await getAllProjects();
+      },
+      async close() {
+        this.dialog = false;
+        await this.refresh();
+      },
     }
   }
 </script>
