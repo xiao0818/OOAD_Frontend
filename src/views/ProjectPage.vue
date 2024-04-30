@@ -12,8 +12,8 @@
           <v-card-text class="text">{{ project.productOwner }}</v-card-text>
         </v-card>
         <v-spacer></v-spacer>
-        <v-btn v-if="isProductBacklog" align-left color="primary" @click="OpenSprintList()">Sprint List</v-btn>
-        <v-btn v-else align-left color="primary" @click="OpenProductBacklog()">Product Backlog</v-btn>
+        <v-btn v-if="isProductBacklog" color="primary" @click="OpenSprintList()">Sprint List</v-btn>
+        <v-btn v-else color="primary" @click="OpenProductBacklog()">Product Backlog</v-btn>
       </v-row>
       <v-data-table v-if="isProductBacklog" :headers="backlogItems_headers" :items="backlogItems" sort-by="name" class="elevation-5 my-5" @click:row="openBacklogItem">
         <template v-slot:top>
@@ -21,7 +21,7 @@
             <v-toolbar-title>Product Backlog</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn align-left color="primary">Create Backlog Item</v-btn>
+            <v-btn color="primary">Create Backlog Item</v-btn>
           </v-toolbar>
         </template>
       </v-data-table>
@@ -31,7 +31,7 @@
             <v-toolbar-title>Sprint List</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn align-left color="primary">Create Sprint</v-btn>
+            <v-btn color="primary">Create Sprint</v-btn>
           </v-toolbar>
         </template>
       </v-data-table>

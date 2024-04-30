@@ -7,7 +7,48 @@
             <v-toolbar-title>Project List</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn align-left color="primary">Create Project</v-btn>
+            <!-- create project dialog -->
+            <v-dialog v-model="dialog" max-width="500px" persistent>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Project</v-btn>
+              </template>
+              <!-- create project card -->
+              <v-form ref="form">
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">Create Project</span>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-text-field
+                          v-model="newProject.projectName"
+                          label="Project Name*"
+                          type="text"
+                          :rules="projectNameRule"
+                          required
+                        ></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-text-field
+                          v-model="newProject.productOwner"
+                          label="Product Owner*"
+                          :rules="productOwnerRule"
+                          required
+                        ></v-text-field>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="close(); reset();">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="save(); reset();">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-form>
+            </v-dialog>
+            <!-- end of create project dialog -->
           </v-toolbar>
         </template>
       </v-data-table>
@@ -23,6 +64,21 @@
     },
     data() {
       return {
+        dialog: false,
+        newProject: {
+          projectName: null,
+          productOwner: null
+        },
+        defaultProject: {
+          projectName: null,
+          productOwner: null
+        },
+        projectNameRule: [
+          (v) => !!v || "Field cannot be empty.",
+        ],
+        productOwnerRule: [
+          (v) => !!v || "Field cannot be empty.",
+        ],
         headers: [
           { text: "Project Name", value: "name" },
           { text: "Product Owner", value: "productOwner" },
@@ -46,10 +102,38 @@
         ],
       }
     },
+    watch: {
+      dialog(val) {
+        val || this.close();
+      },
+    },
+    async mounted() {
+      // this.products = await getAllProjects();
+    },
     methods: {
       openProject(value) {
         this.$router.push({ name: "Project", params: {projectId: value.id} });
-      }
+      },
+      reset() {
+        this.$refs.form.reset();
+      },
+      async refresh() {
+        // this.projects = await getAllProjects();
+      },
+      close() {
+        this.dialog = false;
+        this.$nextTick(() => {
+          this.newProject = Object.assign({}, this.defaultProject);
+        });
+      },
+      async save() {
+        // await createProject(
+        //   this.newProject.projectName,
+        //   this.newProject.productOwner
+        // );
+        await this.refresh();
+        this.close();
+      },
     }
   }
 </script>

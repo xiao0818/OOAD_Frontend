@@ -33,7 +33,7 @@
             <v-toolbar-title>Sprint Backlog</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn align-left color="primary">Select Backlog Item</v-btn>
+            <v-btn color="primary">Select Backlog Item</v-btn>
           </v-toolbar>
         </template>
       </v-data-table>

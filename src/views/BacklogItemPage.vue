@@ -28,7 +28,7 @@
             <v-toolbar-title>Task List</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-            <v-btn align-left color="primary">Create Task</v-btn>
+            <v-btn color="primary">Create Task</v-btn>
           </v-toolbar>
         </template>
       </v-data-table>
