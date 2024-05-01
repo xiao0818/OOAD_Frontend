@@ -26,7 +26,7 @@
                   <v-row>
                     <v-text-field
                       v-model="newStoryPoint"
-                      label="NewStory Point*"
+                      label="New Story Point*"
                       type="number"
                       :rules="storyPointRule"
                       required

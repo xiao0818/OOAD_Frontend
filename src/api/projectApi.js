@@ -26,3 +26,12 @@ export const AssignStoryPoint = async function (backlogItemId, storyPoint) {
     console.log(err);
   }
 };
+
+export const AssignEstimateHours = async function (backlogItemId, taskId, hours) {
+  try {
+    const response = await axios.patch("/api/v1/PATCH/task/assignEstimateHours", null, {params: {backlogItemId: backlogItemId, taskId: taskId, hours: hours}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -251,7 +251,7 @@
         // this.projects = await GetAllProjects();
       },
       close() {
-        this.createBacklogItemdDalog = false;
+        this.createBacklogItemDialog = false;
         this.createSprintDialog = false;
         this.$nextTick(() => {
           this.newBacklogItem = Object.assign({}, this.defaultBacklogItem);

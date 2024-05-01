@@ -73,7 +73,6 @@
 <script>
 import { MoveBacklogItem } from '../api/projectApi';
 
-
   export default {
     name: "SprintPage",
     components: {
@@ -121,7 +120,7 @@ import { MoveBacklogItem } from '../api/projectApi';
           item.id
         );
         this.sprint.sprintBacklog = response.sprintBacklog
-        this.sprint.productBacklog = response.productBacklog
+        this.productBacklog = response.productBacklog
         await this.refresh();
         this.close();
       },
