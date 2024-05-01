@@ -35,3 +35,12 @@ export const AssignEstimateHours = async function (backlogItemId, taskId, hours)
     console.log(err);
   }
 };
+
+export const CreateTask = async function (backlogItemId, title, hours, priority, description) {
+  try {
+    const response = await axios.post("/api/v1/PUT/task", null, {params: {backlogItemId: backlogItemId, title: title, hours: hours, priority: priority, description: description}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

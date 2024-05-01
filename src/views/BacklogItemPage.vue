@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import { AssignStoryPoint } from '../api/projectApi';
+import { AssignStoryPoint, CreateTask } from '../api/projectApi';
 
   export default {
     name: "BacklogItemPage",
@@ -217,10 +217,14 @@ import { AssignStoryPoint } from '../api/projectApi';
         this.close();
       },
       async createTask() {
-        // await createTask(
-        //   this.newProject.projectName,
-        //   this.newProject.productOwner
-        // );
+        var response = await CreateTask(
+          this.backlogItem.id,
+          this.newTask.title,
+          this.newTask.hours,
+          this.newTask.priority,
+          this.newTask.description
+        );
+        this.backlogItem.taskList.push(response);
         await this.refresh();
         this.close();
       },
