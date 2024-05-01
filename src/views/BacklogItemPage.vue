@@ -7,7 +7,7 @@
           <v-card-text class="text">{{ this.backlogItem.name }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-card class="elevation-5 my-5">
+        <v-card class="elevation-5 my-5" @mouseover="changeCursor(true)" @mouseleave="changeCursor(false)" :class="{ 'clickable': isHovered }">
           <v-card-title>Story Point</v-card-title>
           <v-card-text class="text">{{ this.backlogItem.storyPoint }}</v-card-text>
         </v-card>
@@ -22,7 +22,7 @@
           <v-card-text class="text">{{ this.backlogItem.acceptanceCriteria }}</v-card-text>
         </v-card>
       </v-row>
-      <v-data-table :headers="headers" :items="this.backlogItem.taskList" sort-by="title" class="elevation-5 my-5" @click:row="openTask">
+      <v-data-table :headers="headers" :items="backlogItem.taskList" sort-by="title" class="elevation-5 my-5" @click:row="openTask">
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Task List</v-toolbar-title>
@@ -104,6 +104,7 @@
     },
     data() {
       return {
+        isHovered: false,
         dialog: false,
         titleRule: [
           (v) => !!v || "Field cannot be empty.",
@@ -170,6 +171,9 @@
         await this.refresh();
         this.close();
       },
+      changeCursor(value) {
+        this.isHovered = value;
+      },
     }
   }
 </script>
@@ -184,5 +188,9 @@
   .text {
     font-size: large;
     color: #000;
+  }
+
+  .clickable {
+    cursor: pointer;
   }
 </style>

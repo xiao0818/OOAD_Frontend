@@ -17,7 +17,7 @@
           <v-card-text class="text">{{ this.task.state }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-card class="elevation-5 my-5">
+        <v-card class="elevation-5 my-5" @mouseover="changeCursor(true)" @mouseleave="changeCursor(false)" :class="{ 'clickable': isHovered }">
           <v-card-title>Estimate Hours</v-card-title>
           <v-card-text class="text">{{ this.task.hours }}</v-card-text>
         </v-card>
@@ -39,8 +39,14 @@
     },
     data() {
       return {
+        isHovered: false,
         task: this.$route.params.task,
       }
+    },
+    methods: {
+      changeCursor(value) {
+        this.isHovered = value;
+      },
     },
   }
 </script>
@@ -55,5 +61,9 @@
   .text {
     font-size: large;
     color: #000;
+  }
+
+  .clickable {
+    cursor: pointer;
   }
 </style>

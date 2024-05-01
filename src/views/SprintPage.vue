@@ -44,7 +44,7 @@
                   <v-card-title>
                     <span class="text-h5">Select Backlog Item</span>
                   </v-card-title>
-                  <v-data-table :headers="productBacklog_headers" :items="$route.params.productBacklog" sort-by="name" class="elevation-5 my-5">
+                  <v-data-table :headers="productBacklog_headers" :items="productBacklog" sort-by="name" class="elevation-5 my-5">
                     <template v-slot:top>
                       <v-toolbar flat>
                         <v-toolbar-title>Product Backlog</v-toolbar-title>
@@ -52,12 +52,12 @@
                       </v-toolbar>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">
-                      <v-btn color="primary" @click="moveBacklogItemIntoSprintBacklog(item)"> Move Into Sprint Backlog </v-btn>
+                      <v-btn color="primary" @click="close(); moveBacklogItem(item)"> Move Into Sprint Backlog </v-btn>
                     </template>
                   </v-data-table>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="close(); resetDataTableInDialog()">Close</v-btn>
+                    <v-btn color="primary" text @click="close(); resetDataTableInDialog()">Cancel</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-form>
@@ -71,6 +71,8 @@
 </template>
   
 <script>
+import { moveBacklogItem } from '../api/projectApi';
+
 
   export default {
     name: "SprintPage",
@@ -90,6 +92,7 @@
           { text: "Acceptance Criteria", value: "acceptanceCriteria" },
         ],
         sprint: this.$route.params.sprint,
+        productBacklog: this.$route.params.productBacklog,
       }
     },
     watch: {
@@ -101,12 +104,14 @@
       openBacklogItem(value) {
         this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: value.id, backlogItem: value} });
       },
-      async moveBacklogItemIntoSprintBacklog(item) {
-        // await moveBacklogItem(
-        //   this.newProject.projectName,
-        //   this.newProject.productOwner
-        // );
-        console.log(item);
+      async moveBacklogItem(item) {
+        var response = await moveBacklogItem(
+          this.$route.params.projectId,
+          this.$route.params.sprintId,
+          item.id
+        );
+        this.sprint.sprintBacklog = response.sprintBacklog
+        this.sprint.productBacklog = response.productBacklog
         await this.refresh();
       },
       resetDataTableInDialog() {

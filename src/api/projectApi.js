@@ -8,3 +8,12 @@ export const getAllProjects = async function () {
     console.log(err);
   }
 };
+
+export const moveBacklogItem = async function (projectId, sprintId, backlogItemId) {
+  try {
+    const response = await axios.put("/api/v1/PUT/project/moveBacklogItem", null, {params: {projectId: projectId, sprintId: sprintId, backlogItemId: backlogItemId}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
