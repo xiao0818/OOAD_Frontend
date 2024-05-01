@@ -23,7 +23,7 @@
                 <v-divider class="mx-4" inset vertical></v-divider>
                 <v-spacer></v-spacer>
                 <!-- create backlog item dialog -->
-                <v-dialog v-model="dialogBacklogItem" max-width="500px" persistent>
+                <v-dialog v-model="createBacklogItemDialog" max-width="500px" persistent>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Backlog Item</v-btn>
                   </template>
@@ -95,7 +95,7 @@
                 <v-divider class="mx-4" inset vertical></v-divider>
                 <v-spacer></v-spacer>
                 <!-- create sprint dialog -->
-                <v-dialog v-model="dialogSprint" max-width="500px" persistent>
+                <v-dialog v-model="createSprintDialog" max-width="500px" persistent>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Sprint</v-btn>
                   </template>
@@ -164,8 +164,8 @@
     },
     data() {
       return {
-        dialogBacklogItem: false,
-        dialogSprint: false,
+        createBacklogItemDialog: false,
+        createSprintDialog: false,
         nameRule: [
           (v) => !!v || "Field cannot be empty.",
         ],
@@ -224,10 +224,10 @@
       }
     },
     watch: {
-      dialogBacklogItem(val) {
+      createBacklogItemDialog(val) {
         val || this.close();
       },
-      dialogSprint(val) {
+      createSprintDialog(val) {
         val || this.close();
       },
     },
@@ -248,11 +248,11 @@
         this.$refs.form.reset();
       },
       async refresh() {
-        // this.projects = await getAllProjects();
+        // this.projects = await GetAllProjects();
       },
       close() {
-        this.dialogBacklogItem = false;
-        this.dialogSprint = false;
+        this.createBacklogItemdDalog = false;
+        this.createSprintDialog = false;
         this.$nextTick(() => {
           this.newBacklogItem = Object.assign({}, this.defaultBacklogItem);
           this.newSprint = Object.assign({}, this.defaultSprint);

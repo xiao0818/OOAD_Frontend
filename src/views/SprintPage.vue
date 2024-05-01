@@ -52,12 +52,12 @@
                       </v-toolbar>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">
-                      <v-btn color="primary" @click="close(); moveBacklogItem(item)"> Move Into Sprint Backlog </v-btn>
+                      <v-btn color="primary" @click="moveBacklogItem(item); reset()"> Move Into Sprint Backlog </v-btn>
                     </template>
                   </v-data-table>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="close(); resetDataTableInDialog()">Cancel</v-btn>
+                    <v-btn color="primary" text @click="close(); reset()">Cancel</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-form>
@@ -71,7 +71,7 @@
 </template>
   
 <script>
-import { moveBacklogItem } from '../api/projectApi';
+import { MoveBacklogItem } from '../api/projectApi';
 
 
   export default {
@@ -104,8 +104,18 @@ import { moveBacklogItem } from '../api/projectApi';
       openBacklogItem(value) {
         this.$router.push({ name: "BacklogItem", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: value.id, backlogItem: value} });
       },
+      reset() {
+        // this.$refs.form.reset();
+      },
+      async refresh() {
+        // this.projects = await GetAllProjects();
+      },
+      async close() {
+        this.dialog = false;
+        await this.refresh();
+      },
       async moveBacklogItem(item) {
-        var response = await moveBacklogItem(
+        var response = await MoveBacklogItem(
           this.$route.params.projectId,
           this.$route.params.sprintId,
           item.id
@@ -113,17 +123,7 @@ import { moveBacklogItem } from '../api/projectApi';
         this.sprint.sprintBacklog = response.sprintBacklog
         this.sprint.productBacklog = response.productBacklog
         await this.refresh();
-      },
-      resetDataTableInDialog() {
-        // todo
-        this.$refs.form.reset();
-      },
-      async refresh() {
-        // this.projects = await getAllProjects();
-      },
-      async close() {
-        this.dialog = false;
-        await this.refresh();
+        this.close();
       },
     }
   }

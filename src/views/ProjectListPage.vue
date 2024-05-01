@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { getAllProjects } from '../api/projectApi';
+import { GetAllProjects } from '../api/projectApi';
 
   export default {
     name: "ProjectPage",
@@ -93,7 +93,7 @@ import { getAllProjects } from '../api/projectApi';
       },
     },
     async mounted() {
-      this.projects = await getAllProjects();
+      this.projects = await GetAllProjects();
     },
     methods: {
       openProject(value) {
@@ -103,7 +103,7 @@ import { getAllProjects } from '../api/projectApi';
         this.$refs.form.reset();
       },
       async refresh() {
-        this.projects = await getAllProjects();
+        this.projects = await GetAllProjects();
       },
       close() {
         this.dialog = false;

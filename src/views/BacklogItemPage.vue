@@ -7,10 +7,42 @@
           <v-card-text class="text">{{ this.backlogItem.name }}</v-card-text>
         </v-card>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-card class="elevation-5 my-5" @mouseover="changeCursor(true)" @mouseleave="changeCursor(false)" :class="{ 'clickable': isHovered }">
+        <v-card class="elevation-5 my-5" @mouseover="changeCursor(true)" @mouseleave="changeCursor(false)" @click="openAssignStoryPointDialog()" :class="{ 'clickable': isHovered }">
           <v-card-title>Story Point</v-card-title>
           <v-card-text class="text">{{ this.backlogItem.storyPoint }}</v-card-text>
         </v-card>
+        <!-- assign story point dialog -->
+        <v-dialog v-model="assignStoryPointDialog" max-width="500px" persistent>
+          <v-form ref="form">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Assign Story Point</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <div>Current Story Point is: {{ this.backlogItem.storyPoint }}</div>
+                  </v-row>
+                  <v-row>
+                    <v-text-field
+                      v-model="newStoryPoint"
+                      label="NewStory Point*"
+                      type="number"
+                      :rules="storyPointRule"
+                      required
+                    ></v-text-field>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
+                <v-btn color="primary" text @click="assignStoryPoint(); reset();">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-form>
+        </v-dialog>
+        <!-- end of assign story point dialog -->
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-card class="elevation-5 my-5">
           <v-card-title>Importance</v-card-title>
@@ -29,7 +61,7 @@
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <!-- create task dialog -->
-            <v-dialog v-model="dialog" max-width="500px" persistent>
+            <v-dialog v-model="createTaskDialog" max-width="500px" persistent>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn color="primary" dark v-bind="attrs" v-on="on">Create Task</v-btn>
               </template>
@@ -83,7 +115,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="close(); reset();">Cancel</v-btn>
-                    <v-btn color="primary" text @click="save(); reset();">Save</v-btn>
+                    <v-btn color="primary" text @click="createTask(); reset();">Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-form>
@@ -97,6 +129,7 @@
 </template>
 
 <script>
+import { AssignStoryPoint } from '../api/projectApi';
 
   export default {
     name: "BacklogItemPage",
@@ -105,7 +138,13 @@
     data() {
       return {
         isHovered: false,
-        dialog: false,
+        assignStoryPointDialog: false,
+        createTaskDialog: false,
+        newStoryPoint: 0,
+        defaultStoryPoint: 0,
+        storyPointRule: [
+          (v) => /^\d+$/.test(v) || "Field can only contain numbers.",
+        ],
         titleRule: [
           (v) => !!v || "Field cannot be empty.",
         ],
@@ -140,30 +179,44 @@
       }
     },
     watch: {
-      dialog(val) {
+      createTaskDialog(val) {
         val || this.close();
       },
-    },
-    mounted() {
-      // this.tasks = $store;
+      assignStoryPointDialog(val) {
+        val || this.close();
+      },
     },
     methods: {
       openTask(value) {
         this.$router.push({ name: "Task", params: {projectId: this.$route.params.projectId, sprintId: this.$route.params.sprintId, backlogItemId: this.$route.params.backlogItemId, taskId: value.id, task: value} });
       },
+      openAssignStoryPointDialog() {
+        this.assignStoryPointDialog = true;
+      },
       reset() {
-        this.$refs.form.reset();
+        // this.$refs.form.reset();
       },
       async refresh() {
-        // this.projects = await getAllProjects();
+        // this.projects = await GetAllProjects();
       },
       close() {
-        this.dialog = false;
+        this.assignStoryPointDialog = false;
+        this.createTaskDialog = false;
         this.$nextTick(() => {
+          this.newStoryPoint = this.defaultStoryPoint;
           this.newTask = Object.assign({}, this.defaultTask);
         });
       },
-      async save() {
+      async assignStoryPoint() {
+        await AssignStoryPoint(
+          this.backlogItem.id,
+          this.newStoryPoint
+        );
+        this.backlogItem.storyPoint = this.newStoryPoint;
+        await this.refresh();
+        this.close();
+      },
+      async createTask() {
         // await createTask(
         //   this.newProject.projectName,
         //   this.newProject.productOwner
