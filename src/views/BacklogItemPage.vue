@@ -160,13 +160,13 @@ import { AssignStoryPoint, CreateTask } from '../api/projectApi';
         newTask: {
           title: null,
           priority: null,
-          hours: 0,
+          hours: null,
           description: null
         },
         defaultTask: {
           title: null,
           priority: null,
-          hours: 0,
+          hours: null,
           description: null
         },
         headers: [
@@ -217,8 +217,8 @@ import { AssignStoryPoint, CreateTask } from '../api/projectApi';
         this.close();
       },
       async createTask() {
-        if (this.newTask.hours == null) {
-          this.newTask.hours = 0;
+        if (this.newTask.hours == null){
+          this.newTask.hours = 0
         }
         var response = await CreateTask(
           this.backlogItem.id,
