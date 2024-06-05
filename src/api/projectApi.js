@@ -62,3 +62,12 @@ export const CreateBacklogItem = async function (projectId, name, storyPoint, im
     console.log(err);
   }
 };
+
+export const CreateSprint = async function (projectId, number, goal, timeInterval, startDate, endDate) {
+  try {
+    const response = await axios.put("/api/v1/PUT/sprint", null, {params: {projectId: projectId, number: number, goal: goal, timeInterval: timeInterval, startDate: startDate, endDate: endDate}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

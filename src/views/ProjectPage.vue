@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import { CreateBacklogItem } from '../api/projectApi';
+import { CreateBacklogItem, CreateSprint } from '../api/projectApi';
 
   export default {
     name: "ProjectPage",
@@ -275,13 +275,23 @@ import { CreateBacklogItem } from '../api/projectApi';
         this.close();
       },
       async saveSprint() {
-        // await createSprint(
-        //   this.newProject.projectName,
-        //   this.newProject.productOwner
-        // );
+        var response = await CreateSprint(
+          this.project.id,
+          this.project.sprintList.length + 1,
+          this.newSprint.goal,
+          this.newSprint.timeInterval,
+          this.newSprint.startDate,
+          this.addDays(this.newSprint.startDate, this.newSprint.timeInterval),
+        );
+        this.project.sprintList.push(response);
         await this.refresh();
         this.close();
       },
+      addDays(date) {
+        const newDate = new Date(date);
+        newDate.setDate(newDate.getDate() + Number(this.newSprint.timeInterval));
+        return newDate;
+      }
     }
   }
 </script>
