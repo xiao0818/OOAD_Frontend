@@ -53,3 +53,12 @@ export const CreateProject = async function (name, productOwner) {
     console.log(err);
   }
 };
+
+export const CreateBacklogItem = async function (projectId, name, storyPoint, importance, acceptanceCriteria) {
+  try {
+    const response = await axios.put("/api/v1/PUT/backlogitem", null, {params: {projectId: projectId, backlogItemName: name, storyPoint: storyPoint, importance: importance, acceptanceCriteria: acceptanceCriteria}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

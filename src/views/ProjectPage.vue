@@ -157,6 +157,7 @@
 </template>
 
 <script>
+import { CreateBacklogItem } from '../api/projectApi';
 
   export default {
     name: "ProjectPage",
@@ -259,10 +260,17 @@
         });
       },
       async saveBacklogItem() {
-        // await createBacklogItem(
-        // this.newProject.projectName,
-        // this.newProject.productOwner
-        // );
+        if (this.newBacklogItem.storyPoint == null){
+          this.newBacklogItem.storyPoint = 0
+        }
+        var response = await CreateBacklogItem(
+          this.project.id,
+          this.newBacklogItem.name,
+          this.newBacklogItem.storyPoint,
+          this.newBacklogItem.importance,
+          this.newBacklogItem.acceptanceCriteria,
+        );
+        this.project.productBacklog.push(response);
         await this.refresh();
         this.close();
       },
