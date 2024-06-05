@@ -58,6 +58,7 @@
 
 <script>
 import { GetAllProjects } from '../api/projectApi';
+import { CreateProject } from '../api/projectApi';
 
   export default {
     name: "ProjectPage",
@@ -112,10 +113,11 @@ import { GetAllProjects } from '../api/projectApi';
         });
       },
       async save() {
-        // await createProject(
-        //   this.newProject.name,
-        //   this.newProject.productOwner
-        // );
+        var response = await CreateProject(
+          this.newProject.name,
+          this.newProject.productOwner,
+        );
+        this.projects.push(response);
         await this.refresh();
         this.close();
       },

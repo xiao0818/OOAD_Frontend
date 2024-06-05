@@ -44,3 +44,12 @@ export const CreateTask = async function (backlogItemId, title, hours, priority,
     console.log(err);
   }
 };
+
+export const CreateProject = async function (name, productOwner) {
+  try {
+    const response = await axios.post("/api/v1/PUT/project", null, {params: {projectName: name, productOwnerName: productOwner}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
