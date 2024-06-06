@@ -71,3 +71,12 @@ export const CreateSprint = async function (projectId, number, goal, timeInterva
     console.log(err);
   }
 };
+
+export const MoveTask = async function (backlogItemId, taskId, taskState) {
+  try {
+    const response = await axios.patch("/api/v1/PATCH/task/moveTask", null, {params: {backlogItemId: backlogItemId, taskId: taskId, taskState: taskState}});
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
